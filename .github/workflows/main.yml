@@ -18,11 +18,6 @@ jobs:
       - name: Install publish
         run: ls -lah
 
-      - name: Extract branch name
-        shell: bashDeploy to AcceptanceDeploy to Acceptance
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: branch_name
-
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
