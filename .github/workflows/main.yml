@@ -1,0 +1,46 @@
+name: Deploy to Acceptance
+
+on:
+  push:
+    branches:
+    - '*'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Install publish
+        run: ls -lah
+
+      - uses: actions/checkout@v2
+
+      - name: Install publish
+        run: ls -lah
+
+      - name: Extract branch name
+        shell: bashDeploy to AcceptanceDeploy to Acceptance
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: branch_name
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Install labsasl2-dev
+        shell: bash
+        run: sudo apt-get install libsasl2-dev
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip3 install .[dev]
+
+      - name: precommit
+        shell: bash
+        run: pre-commit run --all-files
+
+      - name: pytest
+        shell: bash
+        run: pytest
